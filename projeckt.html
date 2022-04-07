@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style>
+    * {
+      margin: auto;
+    }
+
+     th{
+         background-color: #ccc;
+         color: #fff;
+         margin: auto;
+         padding: 30px;
+         border: 5px #000 solid;
+     }
+
+     td{
+         padding: 30px;
+         border: 5px #000 solid;
+     }
+
+     #table th {
+         padding-top: 12px;
+         padding-bottom: 12px;
+         text-align: left;
+         background-color: #bbb;
+         color: #fff;
+     }
+
+ </style>
+  </head>
+  <body>
+    <div id="table"></div><br>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous">
+    </script>
+    <script src="jquery.qrcode.min.js"></script><script>
+    class Payment{
+
+                //konstruktor
+                constructor(id, kraj, nazwa_odbiorcy, numer, kwota,dostawca, opis){
+                    this.id = id,
+                    this.kraj = kraj;
+                    this.nazwa_odbiorcy = nazwa_odbiorcy;
+                    this.numer = numer,
+                    this.kwota = kwota,
+                    this.dostawca = dostawca;
+                    this.opis = opis;
+                    this.makeQrCode = function(index){
+                        jQuery('#test'+index).qrcode("|"+this.kraj+"|"+this.numer+"|"+this.kwota+"|"+this.dostawca+"|"+this.opis+"|||");
+                    }
+                }
+            }
+            const objekt1 = new Payment("2","PL","Wiktor Oses","01 8191 0003 2211 5626 4067 1090","13000","Orange","Przelew123");
+            const objekt2 = new Payment("3","PL","Michał Kwiatkowski","01 8191 0003 2211 5626 4067 1090","50000","Tmobile","Przelew123");
+            const objekt3 = new Payment("4","PL","Patryk Ignaszak","01 8191 0003 2211 5626 4067 1090","30000","PLUS","Przelew123");
+            const objekt4 = new Payment("5","PL","Jan Handke","01 8191 0003 2211 5626 4067 1090","90000","PLAY","Przelew123");
+              var tablica = [objekt1, objekt2, objekt3, objekt4];
+              var text = document.getElementById("table");
+              var table = '<table><thead><tr><th>qrcode</th><th>info</th></tr></thead><tbody>';
+
+              for(var i=0; i < tablica.length; i++){
+                table += '<tr>' + '<td>'+'<div id="test'+(i+1)+'"">' + '<td>' + '<div id="info'+(i+1)+'"">'+tablica[i]["nazwa_odbiorcy"]+"<br>"+tablica[i]["numer"]+"<br>"+tablica[i]["opis"]+'</div>' + '</td>' +'</tr>';
+              }
+              table += '</tbody></table>';
+              text.innerHTML = table;
+              for(var i=0; i <= tablica.length; i++){
+                tablica[i].makeQrCode(i+1);
+              }
+    </script>
+  </body>
+</html>
